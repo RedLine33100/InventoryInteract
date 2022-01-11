@@ -1,0 +1,23 @@
+plugins {
+    id 'java-library'
+}
+
+group 'fr.redline'
+version '1.0-unstable'
+
+compileJava.options.encoding = 'UTF-8'
+
+configurations.implementation.setCanBeResolved(true)
+///jar {
+///destinationDirectory.set(file("/home/admin/Documents/Projet/buildserver/plugins"))
+///}
+
+repositories {
+    flatDir {
+        dirs "libs"
+    }
+}
+
+dependencies {
+    compileOnly name: "spigot-1.10.2"
+}
