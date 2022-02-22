@@ -88,6 +88,8 @@ public class InventoryInfoHolder extends ItemHolder implements InventoryHolder {
         toAdd.addAndGet(container.getPageMaxItemPosition() + 1);
         container.getFooter().ifPresent(value -> value.getItemMap().forEach((position, item) -> this.setItem(item, position + toAdd.get())));
 
+        page.getOpenPageAction().ifPresent(consumer -> consumer.accept(this));
+
         return this;
     }
 
