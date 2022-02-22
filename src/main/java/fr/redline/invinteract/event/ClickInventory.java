@@ -1,7 +1,6 @@
 package fr.redline.invinteract.event;
 
 import fr.redline.invinteract.inv.holder.InventoryInfoHolder;
-import fr.redline.invinteract.item.Item;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,8 +10,6 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Optional;
 
 public class ClickInventory implements Listener {
 
@@ -46,13 +43,7 @@ public class ClickInventory implements Listener {
 
         inventoryInfoHolder.getInventoryCreator().onClickInventory(inventoryInfoHolder, inventoryClickEvent);
 
-        int clickSlot = inventoryClickEvent.getSlot();
-
-        Optional<Item> item = inventoryInfoHolder.getItem(clickSlot);
-        if (!item.isPresent())
-            return;
-
-        item.get().onItemClicked(inventoryInfoHolder, inventoryClickEvent);
+        inventoryInfoHolder.getItem(inventoryClickEvent.getSlot()).ifPresent(item1 -> item1.onItemClicked(inventoryInfoHolder, inventoryClickEvent));
 
     }
 

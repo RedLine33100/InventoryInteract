@@ -27,9 +27,7 @@ public class CloseInventory implements Listener {
             return;
         if (!(event.getInventory().getHolder() instanceof InventoryInfoHolder))
             return;
-
-        InventoryInfoHolder inventoryCreator = (InventoryInfoHolder) event.getInventory().getHolder();
-        closedInventory((Player) event.getPlayer(), inventoryCreator);
+        closedInventory((Player) event.getPlayer(), (InventoryInfoHolder) event.getInventory().getHolder());
     }
 
     @EventHandler
