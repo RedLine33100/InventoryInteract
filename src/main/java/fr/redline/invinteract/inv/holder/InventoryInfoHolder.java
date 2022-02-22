@@ -69,16 +69,18 @@ public class InventoryInfoHolder extends ItemHolder implements InventoryHolder {
         return this;
     }
 
-    public void updatePage() {
+    public InventoryInfoHolder updatePage() {
         Optional<Page> optionalPage = getInventoryPage();
         openPage(null);
         optionalPage.ifPresent(this::openPage);
+        return this;
     }
 
-    public void updateItem(int position) {
+    public InventoryInfoHolder updateItem(int position) {
         Optional<Item> item = getItem(position);
         ItemStack itemStack = item.isPresent() ? item.get().getItemStack(this) : new ItemStack(Material.AIR);
         getInventory().setItem(position, itemStack);
+        return this;
     }
 
     public Player getPlayerRelated() {
