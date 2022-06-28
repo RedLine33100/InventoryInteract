@@ -17,12 +17,12 @@ import java.util.function.Consumer;
 
 public class CheckInventory extends InventoryCreator {
 
+    Container container;
+    Page page;
     final Consumer<Player> onAccept;
     final Consumer<Player> onRefuse;
     final Consumer<Player> onClosed;
     final List<Player> answered = new ArrayList<>();
-    Container container;
-    Page page;
 
     public CheckInventory(String name, ItemStack trueItem, Consumer<Player> onAccept, ItemStack falseItem, Consumer<Player> onRefuse, Consumer<Player> onClosed) {
 

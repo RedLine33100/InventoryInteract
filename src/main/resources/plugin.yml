@@ -1,0 +1,5 @@
+name: 'InventoryInteract'
+version: '1.0'
+main: 'fr.redline.invinteract.event.EventInventory'
+description: 'Inventory system'
+load: STARTUP

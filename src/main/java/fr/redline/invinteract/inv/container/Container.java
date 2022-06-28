@@ -169,6 +169,7 @@ public class Container {
     }
 
 
+
     public void updatePage(Page page) {
         applyInvUpdate(page, (inventory) -> inventory.openPage(page));
     }

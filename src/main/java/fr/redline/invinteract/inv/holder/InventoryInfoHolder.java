@@ -12,14 +12,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class InventoryInfoHolder extends ItemHolder implements InventoryHolder {
 
-    final Map<String, Object> dataStore = new HashMap<>();
     final InventoryCreator inventoryCreator;
     final Inventory inventory;
     Page page;
@@ -34,25 +31,6 @@ public class InventoryInfoHolder extends ItemHolder implements InventoryHolder {
 
     public InventoryCreator getInventoryCreator() {
         return inventoryCreator;
-    }
-
-    @Override
-    public Inventory getInventory() {
-        return inventory;
-    }
-
-    public InventoryInfoHolder closeInventory() {
-        getInventory().getViewers().forEach(HumanEntity::closeInventory);
-        return this;
-    }
-
-    public Player getPlayerRelated() {
-        return playerRelated;
-    }
-
-    public InventoryInfoHolder setPlayerRelated(Player playerRelated) {
-        this.playerRelated = playerRelated;
-        return this;
     }
 
 
@@ -88,25 +66,21 @@ public class InventoryInfoHolder extends ItemHolder implements InventoryHolder {
         toAdd.addAndGet(container.getPageMaxItemPosition() + 1);
         container.getFooter().ifPresent(value -> value.getItemMap().forEach((position, item) -> this.setItem(item, position + toAdd.get())));
 
-        page.getOpenPageAction().ifPresent(consumer -> consumer.accept(this));
-
         return this;
     }
 
-    public InventoryInfoHolder updatePage() {
-        Optional<Page> optionalPage = getInventoryPage();
-        if (optionalPage.isPresent())
-            this.openPage(optionalPage.get());
-        else this.openPage(null);
+    public Player getPlayerRelated() {
+        return playerRelated;
+    }
+
+    public InventoryInfoHolder setPlayerRelated(Player playerRelated) {
+        this.playerRelated = playerRelated;
         return this;
     }
 
-
-    public InventoryInfoHolder updateItem(int position) {
-        Optional<Item> item = getItem(position);
-        ItemStack itemStack = item.isPresent() ? item.get().getItemStack(this) : new ItemStack(Material.AIR);
-        getInventory().setItem(position, itemStack);
-        return this;
+    @Override
+    public Inventory getInventory() {
+        return inventory;
     }
 
     @Override
@@ -126,27 +100,8 @@ public class InventoryInfoHolder extends ItemHolder implements InventoryHolder {
         return itemOptional;
     }
 
-
-    public InventoryInfoHolder storeData(String key, Object object) {
-        removeData(key);
-        dataStore.put(key, object);
-        return this;
-    }
-
-    public boolean hasData(String key) {
-        return dataStore.containsKey(key);
-    }
-
-    public Optional<Object> getData(String key) {
-        return Optional.ofNullable(dataStore.get(key));
-    }
-
-    public Object removeData(String key) {
-        return Optional.ofNullable(dataStore.remove(key));
-    }
-
-    public InventoryInfoHolder clearData() {
-        dataStore.clear();
+    public InventoryInfoHolder closeInventory() {
+        getInventory().getViewers().forEach(HumanEntity::closeInventory);
         return this;
     }
 
